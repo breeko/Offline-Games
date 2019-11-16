@@ -1,0 +1,12 @@
+{
+    "extends": [
+        "tslint:latest"
+    ],
+    "jsRules": {},
+    "rules": {
+        "semicolon": [true, "never"],
+        "interface-name": false,
+        "arrow-parens": false
+    },
+    "rulesDirectory": []
+}

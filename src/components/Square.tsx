@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-import { SquareContainer, BlankSquareContainer, CircleContainer } from './style'
+import { BlankSquareContainer, CircleContainer, SquareContainer } from "./style"
 
 interface SquareProps {
     value: string | null
@@ -15,7 +15,7 @@ const Square: React.FunctionComponent<SquareProps> = (props) => {
     const SC = value === null ? BlankSquareContainer : props.round ? CircleContainer : SquareContainer
 
     return (
-        <SC onMouseOver={onMouseOver} onClick={onClick}> {value || ''}</SC>
+        <SC onMouseOver={onMouseOver} onClick={onClick}> {value || ""}</SC>
     )
 }
 

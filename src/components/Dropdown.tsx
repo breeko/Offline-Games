@@ -1,6 +1,6 @@
-import React from 'react'
-import _ from 'lodash'
-import { DropdownChoice } from '../types'
+import _ from "lodash"
+import React from "react"
+import { DropdownChoice } from "../types"
 
 interface DropdownProps {
     choices: DropdownChoice[]
@@ -8,7 +8,7 @@ interface DropdownProps {
 }
 
 const Dropdown: React.FunctionComponent<DropdownProps> = (props) => {
-    const gbChoices = _.groupBy(props.choices, 'group')
+    const gbChoices = _.groupBy(props.choices, "group")
     const groups = Object.keys(gbChoices).sort()
     return(
         <div>
@@ -18,9 +18,11 @@ const Dropdown: React.FunctionComponent<DropdownProps> = (props) => {
                     groups.map(group =>
                         <React.Fragment key={group}>
                             <optgroup label={group}>
-                            { gbChoices[group].map(item => <option  key={`${item.value}`} value={item.value}>{item.label}</option>) }
+                            { gbChoices[group].map(item =>
+                                <option  key={`${item.value}`} value={item.value}>{item.label}</option>)
+                            }
                             </optgroup>
-                        </React.Fragment>
+                        </React.Fragment>,
                     )
                 })}
             </select>

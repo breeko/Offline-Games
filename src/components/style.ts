@@ -1,9 +1,9 @@
 import styled from "styled-components"
 
 export const Colors = {
-    dark: '#282c34',
-    light: 'white',
-    grey: 'grey'
+    dark: "#282c34",
+    grey: "grey",
+    light: "white",
 }
 
 export const Text = styled.div`

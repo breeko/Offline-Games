@@ -1,45 +1,48 @@
-import _ from 'lodash'
+import _ from "lodash"
 import { Character, Point, Word } from "../types"
 
 class Board {
-    board: Array<string | null>[]
-    height: number
-    width: number
 
-    constructor(board_: Array<string | null>[]) {
-        const widths = _.uniq(board_.map(r => r.length))
-        if (widths.length > 1) throw Error(`invalid board, rows of different length`)
-        if (widths.length === 0) throw Error(`invalid board, no rows`)
-        this.width = widths[0]
-        this.height = board_.length
-        this.board = _.cloneDeep(board_)
-    }
-
-    static newBoard(height: number, width: number) {
+    public static newBoard(height: number, width: number) {
         const newBoard: string[][] = []
-        _.range(0, height).forEach(_ => newBoard.push(new Array(width).fill(null)))
+        _.range(0, height).forEach(() => newBoard.push(new Array(width).fill(null)))
         return new Board(newBoard)
+    }
+    public height: number
+    public width: number
+    private board: Array<Array<string | null>>
+
+    constructor(boardInit: Array<Array<string | null>>) {
+        const widths = _.uniq(boardInit.map(r => r.length))
+        if (widths.length > 1) { throw Error(`invalid board, rows of different length`) }
+        if (widths.length === 0) { throw Error(`invalid board, no rows`) }
+        this.width = widths[0]
+        this.height = boardInit.length
+        this.board = _.cloneDeep(boardInit)
     }
 
     public get = (row: number, col: number): string | null => this.board[row] && this.board[row][col]
 
-    public getAdjacent = (row: number, col: number, horizontal?: boolean): (string | null |undefined)[] => {
+    public getAdjacent = (row: number, col: number, horizontal?: boolean): Array<string | null | undefined> => {
         if (horizontal === undefined) {
             const h = this.getAdjacent(row, col, true)
             const v = this.getAdjacent(row, col, false)
             return [...h, ...v]
         }
-        return horizontal ? [this.get(row, col - 1), this.get(row, col + 1)] : [this.get(row - 1, col), this.get(row + 1, col)]
+        return horizontal ?
+            [this.get(row, col - 1), this.get(row, col + 1)] :
+            [this.get(row - 1, col), this.get(row + 1, col)]
     }
-        
+
     public set = (letter: Character) => {
         const { row, col } = letter.point
-        if (row >= 0 && row < this.height && col >= 0 && col < this.width)
+        if (row >= 0 && row < this.height && col >= 0 && col < this.width) {
             this.board[letter.point.row][letter.point.col] = letter.value
+        }
     }
     public isEmpty = (): boolean => this.board.every(r => r.every(val => val === null))
 
-    public toString = () => this.board.map(row => row.map(v => v === null ? '-' : v).join(' '))
+    public toString = () => this.board.map(row => row.map(v => v === null ? "-" : v).join(" "))
 
     public clone = () => new Board(_.cloneDeep(this.board))
 
@@ -57,27 +60,29 @@ class Board {
     public isEqual = (o: Board): boolean => _.isEqual(this.board, o.board)
 
     public letters = (): string[] => {
-        const longest = this.words().reduce((a,b) => a.length > b.length ? a : b)
+        const longest = this.words().reduce((a, b) => a.length > b.length ? a : b)
         return longest.map(ch => ch.value)
     }
 
     public findWord = (word: string): Word | undefined =>
-        this.words().find(w => w.length === word.length && _.zip(word.split(''), w).every(([a,b]) => a && b && a === b.value ))
+        this.words()
+            .find(w => w.length === word.length && _.zip(word.split(""), w)
+            .every(([a, b]) => a && b && a === b.value))
 
     public words = (): Word[] => {
         // returns an array of horizontal and vertical words laid on the board
         let inWord: boolean
         let word: Word = []
         const words: Word[] = []
-        //horizontal
+        // horizontal
         _.range(0, this.height).forEach(r => {
             inWord = false
             word = []
             _.range(0, this.width + 1).forEach(c => {
                 const cellVal = this.get(r, c)
-                if (typeof(cellVal) !== 'string') {
+                if (typeof(cellVal) !== "string") {
                     if (inWord) {
-                        word.length > 1 && words.push(word)
+                        if (word.length > 1) { words.push(word) }
                         word = []
                         inWord = false
                     }
@@ -94,9 +99,9 @@ class Board {
             word = []
             _.range(0, this.height + 1).forEach(r => {
                 const cellVal = this.get(r, c)
-                if (typeof(cellVal) !== 'string') {
+                if (typeof(cellVal) !== "string") {
                     if (inWord) {
-                        word.length > 1 && words.push(word)
+                        if (word.length > 1) { words.push(word) }
                         word = []
                         inWord = false
                     }
