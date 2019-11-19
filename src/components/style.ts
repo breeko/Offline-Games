@@ -1,9 +1,10 @@
 import styled from "styled-components"
 
 export const Colors = {
-    dark: "#282c34",
+    dark: "#27304A",
     grey: "grey",
-    light: "white",
+    light: "#E2E7F8",
+    purple: "#b3cde0",
 }
 
 export const Text = styled.div`
@@ -12,41 +13,51 @@ export const Text = styled.div`
 
 export const Header = styled.div`
   background-color: ${Colors.dark};
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 10vh;
-  font-size: calc(10px + 2vmin);
-  color: ${Colors.dark};
+  height: 5vh;
+  font-size: calc(20px + 2vmin);
+  padding: 20px;
 `
 export const Body = styled.div`
   background-color: ${Colors.dark};
   min-height: 90vh;
   display: flex;
   flex-grow: 1;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: ${Colors.dark};
 `
 
+export const Button = styled.button`
+    height: 50px;
+    width: 100px;
+    margin: 20px;
+    background-color: ${Colors.light};
+    border-radius: 5px;
+`
+
 export const GridContainer = (numCols: number, numRows: number) => styled.div`
     display: grid;
-    height: 50vh;
-    /* min-width: 0;
-    min-height: 0; */
+    flex-grow: 1;
+    align-content: middle;
+    justify-content: middle;
     grid-template-columns: repeat(${numCols}, auto);
 `
 
 export const SquareContainer = styled.div`
+    display: flex;
     background-color: ${Colors.light};
     border: 1px solid ${Colors.grey};
-    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
     font-size: 20px;
     pointer-events: none;
-    text-align: center;
     &::selection { background: none};
 `
 
@@ -64,7 +75,7 @@ export const SolvedSquareContainer = styled(SquareContainer)`
 `
 
 export const SvgCircle = styled.circle`
-    fill: green;
+    fill: #e7eff6;
     stroke: blue;
     /* stroke-width: 4px; */
 `
@@ -75,8 +86,8 @@ export const ConnectingLine = styled.line`
 `
 
 export const LetterText = styled.text`
-    font-size: 20px;
-    fill: white;
+    font-size: 25px;
+    fill: #2a4d69;
     pointer-events: none;
     &::selection { background: none};
 `

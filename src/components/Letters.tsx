@@ -1,5 +1,5 @@
 import _ from "lodash"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, Fragment } from "react"
 import { Coordinates } from "../types"
 import { ConnectingLine, LetterText, SvgCircle } from "./style"
 
@@ -26,13 +26,13 @@ const Letters: React.FunctionComponent<LettersProps> = (props) => {
     }, [])
 
     const numLetters = props.letters.length
-    const width = 250
-    const height = 250
+    const width = 300
+    const height = 300
     const numRows = 7
     const numCols = 7
     const horizontalStep = width / numRows
     const verticalStep = height / numCols
-    const radius = width / numRows / 1.25
+    const radius = width / numRows / 1.2
 
     // grid is 7x7
     const layout: Array<[number, number]> =
@@ -108,7 +108,7 @@ const Letters: React.FunctionComponent<LettersProps> = (props) => {
     }
 
     return (
-        <div>
+        <Fragment>
             <svg
                 ref={svgRef}
                 width={width}
@@ -133,7 +133,7 @@ const Letters: React.FunctionComponent<LettersProps> = (props) => {
                     <ConnectingLine x1={startMouse.x} y1={startMouse.y} x2={endMouse.x} y2={endMouse.y}/>}
                 {circles}
             </svg>
-        </div>
+        </Fragment>
     )
 }
 

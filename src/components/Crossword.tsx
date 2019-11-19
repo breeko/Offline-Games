@@ -17,10 +17,7 @@ const Crossword: React.FunctionComponent<BoardProps> = (props) => {
     const solvedChars = new Set(solved.flatMap(w => w.map(ch => JSON.stringify(ch.point))))
     const GC = GridContainer(width, height)
 
-    const getDisplay = (r: number, c: number) => {
-        const ch = props.board.get(r, c)
-        return ch
-    }
+    const getDisplay = (r: number, c: number) => props.board.get(r, c)
 
     return (
         <GC>

@@ -18,7 +18,7 @@ const CrosswordMaker: React.FunctionComponent = () => {
 
   const handleCreate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const words = wordsText.split("\n").filter(w => w.length > 0)
-    const bs = solveBoard(words, 1).sort((a, b) => score(b) - score(a))
+    const bs = solveBoard(words, 1, () => true).sort((a, b) => score(b) - score(a))
 
     const options = bs.map((b, idx) => {
       const group = `Size: ${b.width}-${b.height}`

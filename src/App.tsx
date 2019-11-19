@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import "./App.css"
 import Crossword from "./components/Crossword"
 import Letters from "./components/Letters"
-import { Body, Header, Text } from "./components/style"
+import { Body, Button, Header, Text } from "./components/style"
 import { CONFIG } from "./config"
 import Board from "./containers/Board"
 import { commonWords } from "./data/commonWords"
@@ -27,7 +27,7 @@ const App: React.FunctionComponent = () => {
       return createBoard()
     }
 
-    const boards = solveBoard(words, 1)
+    const boards = solveBoard(words, 1, (b: Board) => b.width >= CONFIG.min_height && b.height <= CONFIG.max_height)
 
     return boards.length === 0 ? createBoard() : boards[0]
   }
@@ -61,14 +61,7 @@ const App: React.FunctionComponent = () => {
   return (
     <div className="App">
       <Header className="App-header">
-        <span> </span>
         <Text>{board && unsolvedWords.length > 0 ? "Word Search Crossword" : "Winner!"}</Text>
-        <br/>
-        <div>
-          <button onClick={() => setBoard(createBoard())}>Create</button>
-          <span> </span>
-          <button onClick={() => setLetters(_.shuffle(letters || []))}>Shuffle</button>
-        </div>
       </Header>
       <Body>
           <br/>
@@ -76,7 +69,11 @@ const App: React.FunctionComponent = () => {
               <Crossword board={board} solved={solvedWords}/>
           }
           <br/>
-              {board && letters && <Letters onSolveWord={handleSolveWord} letters={letters}/>}
+            {board && letters && <Letters onSolveWord={handleSolveWord} letters={letters}/>}
+            <div>
+              <Button onClick={() => setBoard(createBoard())}>Create</Button>
+              <Button onClick={() => setLetters(_.shuffle(letters || []))}>Shuffle</Button>
+            </div>
       </Body>
     </div>
   )
