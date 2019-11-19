@@ -115,6 +115,7 @@ const Letters: React.FunctionComponent<LettersProps> = (props) => {
                 height={height}
                 onPointerMove={handleOnPointerMove}
                 onPointerUp={handleOnPointerUp}
+                onPointerLeave={handleOnPointerUp}
             >
                 {selected.length > 1 && _.range(selected.length - 1).map(idx => {
                     const start = getSelectedCoordinates(idx)
