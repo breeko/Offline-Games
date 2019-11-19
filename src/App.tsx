@@ -1,3 +1,4 @@
+import _ from "lodash"
 import React, { useEffect, useState } from "react"
 import "./App.css"
 import Crossword from "./components/Crossword"
@@ -14,13 +15,14 @@ const App: React.FunctionComponent = () => {
   const [board, setBoard] = useState<Board>()
   const [solvedWords, setSolvedWords] = useState<Word[]>([])
   const [unsolvedWords, setUnsolvedWords] = useState<Word[]>([])
+  const [letters, setLetters] = useState<string[]>()
 
   const createBoard = (): Board => {
     const allWords = commonWords.filter(w => w.length >= CONFIG.min_word_len)
     const longWord = choose(allWords.filter(w => w.length === CONFIG.max_word_len))
     const words = getSubsetWords(longWord, allWords)
 
-    if (words.length < CONFIG.min_num_words || words.length > CONFIG.max_num_words ) {
+    if (words.length < CONFIG.min_num_words || words.length > CONFIG.max_num_words) {
       // board not adequate, try again
       return createBoard()
     }
@@ -39,6 +41,7 @@ const App: React.FunctionComponent = () => {
     if (board) {
       setUnsolvedWords(board.words())
       setSolvedWords([])
+      setLetters(_.shuffle(board.letters()))
     }
   }, [board])
 
@@ -53,13 +56,19 @@ const App: React.FunctionComponent = () => {
     }
   }
 
-  // console.log(unsolvedWords.map(w => wordToString(w)))
+  console.log(unsolvedWords.map(w => wordToString(w)))
 
   return (
     <div className="App">
       <Header className="App-header">
-        <Text>Word Search Crossword</Text>
-        <button onClick={() => setBoard(createBoard())}>Create</button>
+        <span> </span>
+        <Text>{board && unsolvedWords.length > 0 ? "Word Search Crossword" : "Winner!"}</Text>
+        <br/>
+        <div>
+          <button onClick={() => setBoard(createBoard())}>Create</button>
+          <span> </span>
+          <button onClick={() => setLetters(_.shuffle(letters || []))}>Shuffle</button>
+        </div>
       </Header>
       <Body>
           <br/>
@@ -67,7 +76,7 @@ const App: React.FunctionComponent = () => {
               <Crossword board={board} solved={solvedWords}/>
           }
           <br/>
-              {board && <Letters onSolveWord={handleSolveWord} letters={board.letters()}/>}
+              {board && letters && <Letters onSolveWord={handleSolveWord} letters={letters}/>}
       </Body>
     </div>
   )

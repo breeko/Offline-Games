@@ -24,7 +24,8 @@ export const Body = styled.div`
   background-color: ${Colors.dark};
   min-height: 90vh;
   display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -34,9 +35,9 @@ export const Body = styled.div`
 export const GridContainer = (numCols: number, numRows: number) => styled.div`
     display: grid;
     height: 50vh;
-    min-width: 0;
-    min-height: 0;
-    grid-template-columns: repeat(${numCols}, 1fr);
+    /* min-width: 0;
+    min-height: 0; */
+    grid-template-columns: repeat(${numCols}, auto);
 `
 
 export const SquareContainer = styled.div`
@@ -44,7 +45,9 @@ export const SquareContainer = styled.div`
     border: 1px solid ${Colors.grey};
     padding: 20px;
     font-size: 20px;
+    pointer-events: none;
     text-align: center;
+    &::selection { background: none};
 `
 
 export const BlankSquareContainer = styled(SquareContainer)`
@@ -52,11 +55,12 @@ export const BlankSquareContainer = styled(SquareContainer)`
     border: transparent;
 `
 
-export const CircleContainer = styled(SquareContainer)`
-    width: 50px;
-    height: 50px;
-    font-size: 40px;
-    border-radius: 50%;
+export const UnsolvedSquareContainer = styled(SquareContainer)`
+    color: transparent;
+`
+
+export const SolvedSquareContainer = styled(SquareContainer)`
+    color: ${Colors.dark};
 `
 
 export const SvgCircle = styled.circle`

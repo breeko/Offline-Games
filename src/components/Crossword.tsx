@@ -19,8 +19,7 @@ const Crossword: React.FunctionComponent<BoardProps> = (props) => {
 
     const getDisplay = (r: number, c: number) => {
         const ch = props.board.get(r, c)
-        const display = ch === null ? ch : solvedChars.has(JSON.stringify({row: r, col: c})) ? ch : " "
-        return display
+        return ch
     }
 
     return (
@@ -28,7 +27,9 @@ const Crossword: React.FunctionComponent<BoardProps> = (props) => {
         { _.range(0, height).map(r => _.range(0, width).map(c =>
             <Square
                 key={`${r}-${c}`}
-                value={getDisplay(r, c)}/>))
+                value={getDisplay(r, c)}
+                solved={(solvedChars.has(JSON.stringify({row: r, col: c})))}
+            />))
         }
         </GC>
     )
