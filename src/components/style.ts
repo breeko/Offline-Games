@@ -17,12 +17,12 @@ export const Header = styled.div`
   align-items: center;
   justify-content: center;
   height: 5vh;
-  font-size: calc(20px + 2vmin);
-  padding: 20px;
+  font-size: calc(10px + 2vmin);
+  padding: 10px;
 `
 export const Body = styled.div`
   background-color: ${Colors.dark};
-  min-height: 90vh;
+  height: 95vh;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
@@ -33,16 +33,16 @@ export const Body = styled.div`
 `
 
 export const Button = styled.button`
-    height: 50px;
-    width: 100px;
-    margin: 20px;
+    height: 25px;
+    width: 50px;
+    margin: 10px;
     background-color: ${Colors.light};
     border-radius: 5px;
 `
 
 export const GridContainer = (numCols: number, numRows: number) => styled.div`
     display: grid;
-    flex-grow: 1;
+    /* flex-grow: 1; */
     align-content: middle;
     justify-content: middle;
     grid-template-columns: repeat(${numCols}, auto);
@@ -54,8 +54,8 @@ export const SquareContainer = styled.div`
     border: 1px solid ${Colors.grey};
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     font-size: 20px;
     pointer-events: none;
     &::selection { background: none};

@@ -19,6 +19,7 @@ const App: React.FunctionComponent = () => {
 
   const createBoard = (): Board => {
     const allWords = commonWords.filter(w => w.length >= CONFIG.min_word_len)
+    // const longWord = choose(allWords.filter(w => w.length === CONFIG.max_word_len))
     const longWord = choose(allWords.filter(w => w.length === CONFIG.max_word_len))
     const words = getSubsetWords(longWord, allWords)
 

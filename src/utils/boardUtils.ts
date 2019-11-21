@@ -1,4 +1,5 @@
 import { cloneDeep, flatMap, range, uniq, uniqWith } from "lodash"
+import { CONFIG } from "../config"
 import Board from "../containers/Board"
 import { Point, Word } from "../types"
 import { difference } from "./utils"
@@ -17,7 +18,9 @@ export const canLay = (board: Board, word: Word): boolean => {
     const origWords = board.words().map(w => wordToString(w))
     const newWord = word.map(ch => ch.value).join("")
     const diff = difference(origWords, updatedWords)
-    return  diff.length === 1 && diff[0] === newWord
+    return diff.length === 1 &&
+        updatedWords.length - origWords.length === 1 &&
+        diff[0] === newWord
 }
 
 export const trim = (board: Board): Board => {
@@ -57,9 +60,10 @@ export const score = (board: Board): number =>
 export const solveBoard = (texts: string[], maxBoards: number, validBoard: (b: Board) => boolean): Board[] => {
     const memo: Set<string> = new Set()
     let numBoardsSolved = 0
-
+    let idx = 0
     const solveInner = (innerBoard: Board, innerTexts: string[]): Board[] => {
-        if (numBoardsSolved >= maxBoards) { return [] }
+        idx += 1
+        if (numBoardsSolved >= maxBoards || idx > CONFIG.max_attempts) { return [] }
         if (innerTexts.length === 0) {
             numBoardsSolved += 1
             return [trim(innerBoard)]
